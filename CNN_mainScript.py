@@ -17,28 +17,54 @@ import cv2
 from keras.preprocessing.image import ImageDataGenerator
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint
-
+from keras import backend as K
 from keras.layers import Input, concatenate
 from keras.models import Model
 from keras.utils import plot_model
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 #from AutoEncoder import StackedAutoEncoder
 #from Functions import Functions
 #from CNNTraining import CNNFunctions
 #from OnlyDNN import Functions
-from parellelCNN import CNNFunctions
+from LSTMTraining import CNNFunctions
 #creating an Object of the Class
+
+#from keras import backend as K
+import tensorflow as tf
+# =============================================================================
+# with K.tf.device('/gpu:1'):
+#     config = tf.ConfigProto(intra_op_parallelism_threads=4,\
+#            inter_op_parallelism_threads=4, allow_soft_placement=True,\
+#            device_count = {'CPU' : 1, 'GPU' : 1})
+#     session = tf.Session(config=config)
+#     print('Done with Sess ........!')
+#     K.set_session(session)
+# =============================================================================
+# =============================================================================
+# with K.tf.device('/gpu:1'):
+#     print('GPU Accessed')
+#     config = tf.ConfigProto(intra_op_parallelism_threads=4,\
+#            inter_op_parallelism_threads=4, allow_soft_placement=True,\
+#            device_count = {'CPU' : 1, 'GPU' : 1})
+#     session = tf.Session(config=config)
+# K.set_session(session)
+# 
+# =============================================================================
+print('Session Created....!!!')
+
 
 path = os.path.dirname(os.path.abspath('__file__')) + '/'
 
 obj = CNNFunctions(TrainingDataPath=path+'DATA_ver1/Train', valDataPath = path+'DATA_ver1/Validation',
-                numClassses=39,lr=0.001, epochs=100, l2_labmda=0.0001, batchSize=64)
+                numClassses=26,lr=0.001, epochs=20, l2_labmda=0.0001, batchSize=256)
 
 # Preparing the Model for training
 #model,trainSamples,valSamples = obj.getModel()
 #obj.getAutoEncoder()
+#with tf.device('/gpu:1'):
 obj.getModel()
-#Training the Model
+    #Training the Model
 obj.training()
 
 # =============================================================================
@@ -125,4 +151,19 @@ obj.training()
 # model.predict( [x,np.array(l)])
 # =============================================================================
 
-
+# =============================================================================
+# 
+# 
+# p = os.path.dirname(os.path.abspath('__file__')) + '/' 
+# 
+# p = p.split('/')
+# p = p[:-2]
+# p = '/'.join(p) + '/'
+# 
+# 
+# p + 'main/xyz.py'
+# 
+# p + 'app/function.py'
+# 
+# 
+# =============================================================================

@@ -2,23 +2,27 @@
 
 import cv2
 import numpy as np, os, time,pickle
-from ParseDocument import Document
+from ParseDocument_v2 import Document
 from keras.models import load_model
 
 counts = 0
 global X,Y,W,H
 #get the input image
-imgPath = 'TestImages/Sample21.jpg'
+imgPath = 'TestImages/11.png'
 image = cv2.imread(imgPath)
-#
-#image = cv2.resize(image,(1355,1045),cv2.INTER_AREA)
-image = cv2.resize(image,(1360,1045),cv2.INTER_AREA)
+wd,ht = image.shape[:2]
+#print(wd)
+#print(ht)
+#image = cv2.resize(image,(1500,1345),cv2.INTER_AREA)
+'''if ht not in range(1300,1500): 
+    image = cv2.resize(image,(1500,1100),cv2.INTER_AREA)
+    print(image.shape)'''
 img = image.copy()
 
 obj = Document()
-image = obj.processedImage(image)
+image, imgCnt = obj.processedImage(image)
 
-image_with_lines = obj.dilateImage(image.copy(),60)
+image_with_lines = obj.dilateImage(imgCnt.copy(),70)
 
 contours = obj.getCountours(image_with_lines.copy())
     #cv2.imwrite(baseDir +'/testDir/' + 'afterCnt1.jpg', image_With_Lines) 
@@ -32,21 +36,21 @@ for iter, line_Area in enumerate(contours):
     x,y,w,h = cv2.boundingRect(line_Area)
 
     X,Y,W,H = x,y,w,h
-    line_Image = image[y:y+h, x:x+w]
+    line_Image = imgCnt[y:y+h, x:x+w]
     #path = r'C:\Users\sachin\Desktop\Images\\' + str(counts)+'.png'
     
-    line_Contours = obj.getCountours(image[y:y+h, x:x+w])
+    line_Contours = obj.getCountours(imgCnt[y:y+h, x:x+w])
     line_Contours = obj.sortCountours(line_Contours,"left-to-right")
     #getting the Text 
-    text = obj.getTextFromImage(image[y:y+h, x:x+w], line_Contours, Width=8, Height=8)   
+    text = obj.getTextFromImage(image[y:y+h, x:x+w], line_Contours, Width=8, Height=5)   
     print(text)
     #break
 
 
 
     
-"""
-x,y,w,h = cv2.boundingRect(contours[4])       
+
+"""x,y,w,h = cv2.boundingRect(contours[4])       
 cv2.imshow('img',image[y:y+h, x:x+w])
 cv2.waitKey(0)
 
@@ -218,7 +222,5 @@ def getNewResizedImage(input_Image, image_Size):
     input_Image = np.concatenate((input_Image,temp_Row))
 
     return cv2.resize(input_Image, (image_Size,image_Size), interpolation = cv2.INTER_AREA )"""
-
-"""
 
 
