@@ -11,6 +11,7 @@ import imutils
 
 class Document():
     def __init__(self):
+        self.dfNames = ['FirstName','LastName', 'Email', 'Street','City','State','ZipCode','Phone','BirthDay']
         #self.modelPath = modelPath
         self.path = os.path.dirname(os.path.abspath('__file__')) + '/' 
         alphaNumnericModel_path = self.path + 'Models/SeperateModel/AlphabetNumeric_v3.h5'
@@ -68,8 +69,8 @@ class Document():
         cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage2.png', thres_process)
         #close = cv2.morphologyEx(thres.copy(),cv2.MORPH_OPEN, np.zeros((5,5),dtype = 'uint8'))
 
-        thres_forContours = cv2.adaptiveThreshold(thres_process.copy(),255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV,3,10 )
-        cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage3.png', thres_forContours)
+        #thres_forContours = cv2.adaptiveThreshold(thres_process.copy(),255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV,3,10 )
+        #cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage3.png', thres_forContours)
         #erd = cv2.erode(close,np.zeros((3,3),dtype = 'uint8'))
         #cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage3.png', thres_forContours)
         # compute gradients along the X and Y axis, respectively
@@ -88,7 +89,7 @@ class Document():
         #thres_process_dilate = cv2.dilate(thres_forContours.copy(), np.ones((3,3),np.uint8),iterations=2)
         #cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage4.png', thres_process_dilate)
         autoCanny = imutils.auto_canny(thres_process.copy(),sigma = 0.33)
-        cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage5.png', autoCanny)
+        cv2.imwrite(self.path + 'EvalImages/' + 'ProcessedImage3.png', autoCanny)
 
         return thres_process, autoCanny
 
@@ -171,7 +172,7 @@ class Document():
         #print('Entered')
         #image = np.array(image,dtype='uint8')
         
-        Word_Dilated_Image = Document.dilateImage(self,image,20)
+        Word_Dilated_Image = Document.dilateImage(self,image,18)
         '''cv2.imshow('image',Word_Dilated_Image)
         cv2.waitKey(0)'''
         #cv2.imwrite(self.path + 'EvalImages/Dilate.png', Word_Dilated_Image)
@@ -366,7 +367,19 @@ class Document():
         return alphabetPrediction
 
 
+    def storeData(self, data):
+        
+        try:
+            df = pd.DataFrame(data)
+            df.columns = self.dfNames
+            df.to_csv(self.path + 'Output/Output.csv',index=False)
+            return True
+        except Exception as e:
+            print('Exception... ', e)
+            return False
 
+
+            
 
 
 
