@@ -18,8 +18,9 @@ The arechitecture used to train the model is CNN along with deep learning networ
 ![Model_Architecture](https://github.com/VaibhavKhamgaonkar/OCR/blob/master/modelStructure_CNN%2BLSTM.png)
  
 
-* Adde Requirment files. Use 
-**pip install -r /path/to/requirements.txt** for installation iof requirements.
+* Added Requirment files. Use 
+
+      pip install -r /path/to/requirements.txt #for installation iof requirements.
 
 
 **Description: -**
