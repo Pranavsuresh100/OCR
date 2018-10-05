@@ -17,12 +17,14 @@ batchFilepath = path + 'SampleTestForms/'
 
 images = [img for img in os.listdir(batchFilepath) if '.png' in img or '.jpg' in img]#'.DS_Store' not in img]
 #images =[img for img in images if '.png' in img or '.jpg' in img]
+print('==============================================')
 print('Found {} images...'.format(len(images)))
+print('==============================================\n')
 #get the input image
 for imageFile in images:
-    
+    print('==============================================')
     print('Starting ', imageFile)
-
+    print('==============================================')
     imgPath = batchFilepath + imageFile
     image = cv2.imread(imgPath)
     wd,ht = image.shape[:2]
@@ -62,7 +64,7 @@ for imageFile in images:
         line_Contours = obj.sortCountours(line_Contours,"left-to-right")
         #getting the Text 
         text = obj.getTextFromImage(image[y:y+h, x:x+w], line_Contours, Width=8, Height=5)   
-        #print(text)
+        print(text)
         predictedText.append(text)
     #print('Len of predicted text = ',len(predictedText))
     while i < len(predictedText):
@@ -76,7 +78,9 @@ for imageFile in images:
         output.append(x)
         i+=1
     #print('len of output',len(output))
+    print('==============================================')
     print('Done with Processing ', imageFile)
+    print('==============================================')
     #Now updating it to final List
     allOutput.append(output) 
 print(len(allOutput))
@@ -84,7 +88,7 @@ ret = obj.storeData(allOutput)
 if ret == True:
     print('Done with Scanning.. Result can be found at {}'.format(path + 'Output/Output.csv') )
 else:
-    print('Something went wrong..!!!')
+    print('Something went wrong while saving the csv file..!!!')
 
 
 
