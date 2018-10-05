@@ -25,10 +25,11 @@ The arechitecture used to train the model is CNN along with deep learning networ
 
 **Description: -**
 1. For Inference : 
+* Put all your image documents to the **SampleTestForms** which you want to extract infomation from image. 
 * getText.py and ParseDocument_v2.py these 2 files sould be there in same folder as these files are used to identifying the Text from the scanned image document.
 * configure the ParseDocument_v2.py file wiht the Model Path and label paths. The default location of all models and label files are inside Model folder. please change if you are storing these files elsewhere.
-* Add the name of input scanned document in the getText.py file and save it. The sample files are stored in the SampleTestForms folders.
-* Run getText.py file in command prompt ==> Program will fetch the hand writtern characters and print it on screen.
+
+* Run getText.py file in command prompt ==> Program will fetch the hand writtern characters, print it on screen and simultaneoulsy it will create a csv file with all the informations in Output directory(located inside current working directory).
 
 
 2. For Model Training:
