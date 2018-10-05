@@ -20,16 +20,18 @@ The arechitecture used to train the model is CNN along with deep learning networ
 
 * Added Requirment files. Use 
 
-      pip install -r /path/to/requirements.txt #for installation iof requirements.
+      pip install -r /path/to/requirements.txt #for installation of requirements.
 
 
 **Description: -**
 1. For Inference : 
+
 * Put all your image documents to the **SampleTestForms** which you want to extract infomation from image. 
 * getText.py and ParseDocument_v2.py these 2 files sould be there in same folder as these files are used to identifying the Text from the scanned image document.
 * configure the ParseDocument_v2.py file wiht the Model Path and label paths. The default location of all models and label files are inside Model folder. please change if you are storing these files elsewhere.
 
 * Run getText.py file in command prompt ==> Program will fetch the hand writtern characters, print it on screen and simultaneoulsy it will create a csv file with all the informations in Output directory(located inside current working directory).
+* all the cropped and processed images will be there inside the RuntimeImages folder for troubleshooting..(if required)
 
 
 2. For Model Training:
@@ -52,13 +54,12 @@ i.e.
 
 * Edit the LSTM_Training.py file and update the Following parameters
 
-1. Model checkpoint == Enter the name of model and path to which the Model get saved after each epochs if vac loss is reduced.
+1. Model checkpoint == Enter the name of model and path to which the Model get saved after each epochs if validation loss is reduced.
 2. Label File Name
-3. Update the Details al the bottom of the file.
-
-**Note : the default location is in Current Working directory inside Models folder**
+3. Update the details at the bottom of the file.
 
 
 
-**Note**: _This OCR model is tuned for the sample forms added in the SampleTestForm folder. If you are trying for something different that the mentioned form then you have to tune it by yourself._
+
+**Note**: _This OCR model is tuned for the sample forms added in the SampleTestForm folder. If you are trying for something different than the mentioned form then you have to tune the code in order to incorporate new changes ..._
 
